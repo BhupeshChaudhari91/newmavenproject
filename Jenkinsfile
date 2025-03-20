@@ -6,16 +6,12 @@ pipeline {
         git 'https://github.com/kumargaurav039/newmavenproject.git'
       }
     }
-
-    stage('package the code after sonar scanning') {
+    stage('package the code') {
       steps {
-
         withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) {
         sh 'mvn clean compile'
       }
     }
     }
-
-
   }
 }
