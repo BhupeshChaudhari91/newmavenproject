@@ -13,5 +13,13 @@ pipeline {
       }
     }
     }
+    stage('deploy the code on tomcat') {
+      steps {
+        sshagent(['DEVCICD']) {
+        sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@13.232.108.249:/usr/share/tomcat/webapps'
+       }
+      }
+    }
     }
   }
+
