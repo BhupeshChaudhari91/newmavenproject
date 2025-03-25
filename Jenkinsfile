@@ -8,10 +8,11 @@ pipeline {
     }
     stage('package the code') {
       steps {
-        withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) 
+        withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) {
         withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar'){
         sh 'mvn package sonar:sonar'
       }
+        }
     }
     }
     }
