@@ -8,17 +8,11 @@ pipeline {
     }
     stage('package the code') {
       steps {
-        withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) {
-        sh 'mvn clean package'
+        withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) 
+        withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar'){
+        sh 'mvn package sonar:sonar'
       }
     }
-    }
-    stage('deploy the code on tomcat') {
-      steps {
-        sshagent(['DEVCICD']) {
-        sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@172.31.9.247:/usr/share/tomcat/webapps'
-       }
-      }
     }
     }
   }
